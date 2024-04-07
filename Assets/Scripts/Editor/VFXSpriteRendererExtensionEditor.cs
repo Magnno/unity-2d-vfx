@@ -7,30 +7,38 @@ namespace PlaceHolderVFX
     [CustomEditor(typeof(VFXSpriteRendererExtension))]
     public sealed class VHXSpriteRendererExtensionEditor : Editor
     {
+        private VFXSpriteRendererExtension script;
+
+        private void OnEnable()
+        {
+            script = (VFXSpriteRendererExtension)target;
+        }
+
         public override void OnInspectorGUI()
         {
-            base.OnInspectorGUI();
-
-            var script = (VFXSpriteRendererExtension)target;
-
+            serializedObject.Update();
 
             BeginBox("Warp");
-            script.EnableWarpEffect = EditorGUILayout.Toggle("Enable", script.EnableWarpEffect);
+            SerializedProperty property = serializedObject.FindProperty("_enableWarpEffect");
+            EditorGUILayout.PropertyField(property, new GUIContent("Label"));
+            /*script.EnableWarpEffect = EditorGUILayout.Toggle("Enable", script.EnableWarpEffect);
             if (script.EnableWarpEffect)
             {
                 script.WarpTilling = EditorGUILayout.Vector2Field("Tilling", script.WarpTilling);
                 script.WarpIntensity = EditorGUILayout.Vector2Field("Intensity", script.WarpIntensity);
                 script.WarpSpeed = EditorGUILayout.Vector2Field("Speed", script.WarpSpeed);
-            }
+            }*/
             EndBox();
 
             BeginBox("Teste");
             EndBox();
 
+            serializedObject.ApplyModifiedProperties();
+
             if (GUILayout.Button("Remove"))
             {
                 var sr = script.GetComponent<SpriteRenderer>();
-                sr.sharedMaterial = script.previousMat;
+                sr.sharedMaterial = AssetDatabase.LoadAssetAtPath<Material>("Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat");
                 DestroyImmediate(script);
             }
         }
