@@ -1,7 +1,6 @@
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
-namespace PlaceHolderVFX
+namespace Maguinho.VFX
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public sealed class VFXSpriteRendererExtension : MonoBehaviour

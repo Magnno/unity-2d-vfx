@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace PlaceHolderVFX
+namespace Maguinho.VFX
 {
     [CustomEditor(typeof(VFXSpriteRendererExtension))]
     public sealed class VHXSpriteRendererExtensionEditor : Editor

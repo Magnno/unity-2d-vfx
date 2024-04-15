@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VFXScreen
+  m_Shader: {fileID: -6465566751694194690, guid: 177a8d09f8187be47b8d562640e07de3, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _QUANTITY_THREE
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Fuzziness: 0
+    - _QUANTITY: 2
+    - _Range: 0.003
+    - _teste: 2.64
+    m_Colors:
+    - _NColor1: {r: 0.08116722, g: 1, b: 0, a: 0}
+    - _NColor2: {r: 1, g: 0.9372188, b: 0, a: 0}
+    - _NColor3: {r: 0, g: 0.46255493, b: 1, a: 0}
+    - _NColor4: {r: 0, g: 0, b: 0, a: 0}
+    - _NColor5: {r: 0, g: 0, b: 0, a: 0}
+    - _NColor6: {r: 0, g: 0, b: 0, a: 0}
+    - _NColor7: {r: 0, g: 0, b: 0, a: 0}
+    - _NColor8: {r: 0, g: 0, b: 0, a: 0}
+    - _OColor1: {r: 0.9490197, g: 0.9490197, b: 0.9490197, a: 1}
+    - _OColor2: {r: 0.90196085, g: 0.90196085, b: 0.90196085, a: 0}
+    - _OColor3: {r: 0.95, g: 0.95, b: 0.95, a: 0}
+    - _OColor4: {r: 0, g: 0, b: 0, a: 0}
+    - _OColor5: {r: 0, g: 0, b: 0, a: 0}
+    - _OColor6: {r: 0, g: 0, b: 0, a: 0}
+    - _OColor7: {r: 0, g: 0, b: 0, a: 0}
+    - _OColor8: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
