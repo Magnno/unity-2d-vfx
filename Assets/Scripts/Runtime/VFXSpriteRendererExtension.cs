@@ -29,6 +29,7 @@ namespace Maguinho.VFX
             UpdateAllParametersInMaterial();
         }
 
+        #region Warp
         [SerializeField] private bool _enableWarpEffect = false;
         public bool EnableWarpEffect
         {
@@ -64,6 +65,36 @@ namespace Maguinho.VFX
             set { _warpSpeed = value; VFXMat.SetVector("_Warp_Speed", _warpSpeed); }
         }
 
+        [SerializeField] private bool _enableVerticalWarpMask;
+        public bool EnableVerticalWarpMask
+        {
+            get { return _enableVerticalWarpMask; }
+            set
+            {
+                _enableVerticalWarpMask = value;
+                if (_enableVerticalWarpMask)
+                    VFXMat.EnableKeyword("_ENABLE_VERTICAL_WARP_MASK");
+                else
+                    VFXMat.DisableKeyword("_ENABLE_VERTICAL_WARP_MASK");
+            }
+        }
+
+        [SerializeField, Range(0f, 1f)] private float _verticalWarpMask = 0f;
+        public float VerticalWarpMask
+        {
+            get { return _verticalWarpMask; }
+            set { _verticalWarpMask = value; VFXMat.SetFloat("_Vertical_Warp_Mask", _verticalWarpMask); }
+        }
+
+        [SerializeField] private bool _invertVerticalWarpMask = false;
+        public bool InvertVerticalWarpMask
+        {
+            get { return _invertVerticalWarpMask; }
+            set { _invertVerticalWarpMask = value; VFXMat.SetInt("_Invert_Vertical_Warp_Mask", _invertVerticalWarpMask ? 1 : 0); }
+        }
+        #endregion
+
+        #region CC
         [SerializeField] private bool _enableColorCorrection = false;
         public bool EnableColorCorrection
         {
@@ -112,8 +143,9 @@ namespace Maguinho.VFX
             get { return _contrast; }
             set { _contrast = value; VFXMat.SetFloat("_Contrast", _contrast); }
         }
+        #endregion
 
-
+        #region Shake
         [SerializeField] private bool _enableShake = false;
         public bool EnableShake
         {
@@ -128,27 +160,50 @@ namespace Maguinho.VFX
             }
         }
 
-        [SerializeField] private float _shakeIntensity = 1f;
+        [SerializeField, Min(0f)] private float _shakeIntensity = 1f;
         public float ShakeIntensity
         {
             get { return _shakeIntensity; }
             set { _shakeIntensity = value; VFXMat.SetFloat("_Shake_Intensity", _shakeIntensity); }
         }
 
-        [SerializeField] private Vector2 _shakeScale = Vector2.one;
-        public Vector2 ShakeScale
-        {
-            get { return _shakeScale; }
-            set { _shakeScale = value; VFXMat.SetVector("_Shake_Scale", _shakeScale); }
-        }
-
-        [SerializeField] private float _shakeSpeed = .2f;
+        [SerializeField, Min(0f)] private float _shakeSpeed = 2f;
         public float ShakeSpeed
         {
             get { return _shakeSpeed; }
             set { _shakeSpeed = value; VFXMat.SetFloat("_Shake_Speed", _shakeSpeed); }
         }
+        #endregion
 
+        #region Orbital Movement
+        [SerializeField] private bool _enableOrbitalMovement = false;
+        public bool EnableOrbitalMovement
+        {
+            get { return _enableOrbitalMovement; }
+            set
+            {
+                _enableOrbitalMovement = value;
+                if (_enableOrbitalMovement)
+                    VFXMat.EnableKeyword("_ENABLE_ORBITAL_MOVEMENT");
+                else
+                    VFXMat.DisableKeyword("_ENABLE_ORBITAL_MOVEMENT");
+            }
+        }
+
+        [SerializeField] private float _orbitalMovementIntensity = 1f;
+        public float OrbitalMovementIntensity
+        {
+            get { return _orbitalMovementIntensity; }
+            set { _orbitalMovementIntensity = value; VFXMat.SetFloat("_Orbital_Movement_Intensity", _orbitalMovementIntensity); }
+        }
+
+        [SerializeField] private Vector2 _orbitalMovementSpeedScale = Vector2.one;
+        public Vector2 OrbitalMovementSpeedScale
+        {
+            get { return _orbitalMovementSpeedScale; }
+            set { _orbitalMovementSpeedScale = value; VFXMat.SetVector("_Orbital_Movement_Speed_Scale", _orbitalMovementSpeedScale); }
+        }
+        #endregion
 
         public void AssignMaterial()
         {
@@ -166,6 +221,14 @@ namespace Maguinho.VFX
             VFXMat.SetVector("_Warp_Tilling", _warpTilling);
             VFXMat.SetVector("_Warp_Intensity", _warpIntensity);
             VFXMat.SetVector("_Warp_Speed", _warpSpeed);
+
+            if (_enableVerticalWarpMask)
+                VFXMat.EnableKeyword("_ENABLE_VERTICAL_WARP_MASK");
+            else
+                VFXMat.DisableKeyword("_ENABLE_VERTICAL_WARP_MASK");
+
+            VFXMat.SetFloat("_Vertical_Warp_Mask", _verticalWarpMask);
+            VFXMat.SetInt("_Invert_Vertical_Warp_Mask", _invertVerticalWarpMask ? 1 : 0);
 
             // Color
             if (_enableColorCorrection)
@@ -189,8 +252,16 @@ namespace Maguinho.VFX
                 VFXMat.DisableKeyword("_ENABLE_SHAKE");
 
             VFXMat.SetFloat("_Shake_Intensity", _shakeIntensity);
-            VFXMat.SetVector("_Shake_Scale", _shakeScale);
             VFXMat.SetFloat("_Shake_Speed", _shakeSpeed);
+
+            // Orbital Movement
+            if (_enableOrbitalMovement)
+                VFXMat.EnableKeyword("_ENABLE_ORBITAL_MOVEMENT");
+            else
+                VFXMat.DisableKeyword("_ENABLE_ORBITAL_MOVEMENT");
+
+            VFXMat.SetFloat("_Orbital_Movement_Intensity", _orbitalMovementIntensity);
+            VFXMat.SetVector("_Orbital_Movement_Speed_Scale", _orbitalMovementSpeedScale);
         }
 
         private void Start()

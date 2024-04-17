@@ -115,10 +115,7 @@ namespace Maguinho.VFX
         /// <param name="active">Enable (true) or disable (false).</param>
         public void ToggleEffectActivation(int id, bool active)
         {
-            if (active)
-                _material.EnableKeyword($"_ENABLED{id}");
-            else
-                _material.DisableKeyword($"_ENABLED{id}");
+            _material.SetInteger($"_enabled{id}", active ? 1 : 0);
         }
 
         /// <summary>

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca468694147da334cbfd7f8af11b66c8, type: 3}
   m_Name: Demo Ripple Effect
   m_EditorClassIdentifier: 
-  amplitude: 0.5
+  amplitude: 1
   velocity: 2
   duration: 0.5
   damping: 0

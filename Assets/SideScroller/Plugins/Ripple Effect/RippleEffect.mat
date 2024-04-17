@@ -63,10 +63,10 @@ Material:
     - _Strength_2: 0.025
     - _Strength_3: -0.0125
     - _Velocity: 1
-    - _amplitude0: 0.5
-    - _amplitude1: 0.5
-    - _amplitude2: 0.5
-    - _amplitude3: 0.5
+    - _amplitude0: 1
+    - _amplitude1: 1
+    - _amplitude2: 1
+    - _amplitude3: 1
     - _amplitude4: 1.49
     - _damping0: 0
     - _damping1: 0
@@ -94,10 +94,10 @@ Material:
     - _smoothEdge3: 0.25
     - _smoothEdge4: 0.25
     - _t: 0
-    - _t0: 0.50696874
-    - _t1: 0.50698566
-    - _t2: 0.52613646
-    - _t3: 0.50403994
+    - _t0: 0.2634063
+    - _t1: 0.50309306
+    - _t2: 0.5040665
+    - _t3: 0.50169516
     - _t4: 1.2567304
     - _velocity0: 2
     - _velocity1: 2
@@ -107,9 +107,9 @@ Material:
     m_Colors:
     - _Origin: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _Spawn_Position: {r: 0.5, g: 0.5, b: 0, a: 0}
-    - _origin0: {r: 0.76190525, g: 0.7301593, b: 0, a: 0}
-    - _origin1: {r: -1.8412702, g: -0.60317457, b: 0, a: 0}
-    - _origin2: {r: 1.8412708, g: 0.60317457, b: 0, a: 0}
-    - _origin3: {r: 0.36897236, g: -2.7840667, b: 0, a: 0}
+    - _origin0: {r: -6.818182, g: 2.3923445, b: 0, a: 0}
+    - _origin1: {r: -7.966507, g: 2.7751195, b: 0, a: 0}
+    - _origin2: {r: -5.625, g: -0.4411766, b: 0, a: 0}
+    - _origin3: {r: 2.5700932, g: 1.1214954, b: 0, a: 0}
     - _origin4: {r: -2.9182398, g: -1.6436055, b: 0, a: 0}
   m_BuildTextureStacks: []
