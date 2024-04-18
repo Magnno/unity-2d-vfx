@@ -1,0 +1,16 @@
+{
+    "name": "maguinho.2dvfx.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:27eb561d948650940854b8f49778beaa"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
