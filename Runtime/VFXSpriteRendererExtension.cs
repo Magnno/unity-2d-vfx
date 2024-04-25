@@ -5,22 +5,13 @@ namespace Maguinho.VFX
     [RequireComponent(typeof(SpriteRenderer))]
     public sealed class VFXSpriteRendererExtension : MonoBehaviour
     {
-        private const string shaderName = "Maguinho/VFXSprite";
+        private const string VFX_SHADER_NAME = "Maguinho/VFXSprite";
 
         private SpriteRenderer _sr;
         private SpriteRenderer sr => _sr ? _sr : _sr = GetComponent<SpriteRenderer>();
 
         private Material _VFXMat;
-        public Material VFXMat
-        {
-            get
-            {
-                if (_VFXMat == null)
-                    _VFXMat = new Material(Shader.Find(shaderName));
-
-                return _VFXMat;
-            }
-        }
+        public Material VFXMat => _VFXMat ? _VFXMat : _VFXMat = new Material(Shader.Find(VFX_SHADER_NAME));
 
         private void OnValidate()
         {
