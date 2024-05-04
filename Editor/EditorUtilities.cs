@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+
 using UnityEditor;
 using UnityEngine;
 
@@ -8,10 +9,19 @@ namespace Maguinho
     {
         public delegate void InspectorContent();
 
-        public static void DrawBox(string header, InspectorContent content)
+        public enum BoxSytle
         {
-            EditorGUILayout.BeginVertical("HelpBox");
-            EditorGUI.indentLevel++;
+            WithBorder,
+            NoBorder,
+        }
+
+        public static void DrawBox(string header, InspectorContent content, BoxSytle boxStyle = BoxSytle.WithBorder, bool useLine = true, int indentLvl = 1)
+        {
+            // Header Style
+            GUIStyle headerStyle = new GUIStyle();
+            headerStyle.fontSize = 14;
+            headerStyle.fontStyle = FontStyle.Bold;
+            headerStyle.normal.textColor = new Color(.85f, .85f, .85f, 1f);
 
             // Separator style
             Texture2D pixel = new Texture2D(1, 1);
@@ -24,20 +34,25 @@ namespace Maguinho
             };
             separatorStyle.normal.background = pixel;
 
-            EditorGUILayout.LabelField(header, EditorStyles.boldLabel); // Header
-            GUILayout.Box(GUIContent.none, separatorStyle); // Line separator
+            if (boxStyle == BoxSytle.WithBorder)
+                EditorGUILayout.BeginVertical("HelpBox");
+            else if (boxStyle == BoxSytle.NoBorder)
+                EditorGUILayout.BeginVertical("Box");
 
-            content();
+            EditorGUI.indentLevel += indentLvl;
+
+            if (!string.IsNullOrEmpty(header))
+                EditorGUILayout.LabelField(header, headerStyle); // Header
+
+            if (useLine)
+                GUILayout.Box(GUIContent.none, separatorStyle); // Line separator
+
+            content(); // Draw the inspector
 
             EditorGUILayout.EndVertical();
-            EditorGUI.indentLevel--;
-        }
-
-        public static void DrawProperty(this SerializedObject so, string propertyRef, string label, out SerializedProperty property)
-        {
-            property = so.FindProperty(propertyRef);
-            EditorGUILayout.PropertyField(property, new GUIContent(label));
+            EditorGUI.indentLevel -= indentLvl;
         }
     }
 }
+
 #endif
