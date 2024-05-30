@@ -33,7 +33,7 @@ namespace Maguinho.VFX
             bool hasAllComponents = script.MeshFilter && script.MeshRenderer && script.RenderCamera && script.MeshRenderer.sharedMaterial && script.MeshRenderer.sharedMaterial.shader.name == "Maguinho/2DWater";
             if (!hasAllComponents)
             {
-                EditorGUILayout.HelpBox("There are missing components!", MessageType.Error);
+                EditorGUILayout.HelpBox("Missing components!", MessageType.Error);
                 Space(1f);
             }
 
@@ -51,6 +51,23 @@ namespace Maguinho.VFX
                 DrawProp("vertexCount", "Vertices Count", out _);
                 DrawProp("meshWidth", "Width", out _);
                 DrawProp("meshHeight", "Height", out _);
+                DrawProp("pivot", "Pivot", out _);
+            });
+
+            Space(1f);
+
+            EditorUtilities.DrawBox("Ripple", () =>
+            {
+                DrawProp("enableRipples", "Enable", out var prop);
+                EditorGUI.BeginDisabledGroup(!prop.boolValue);
+                Space(2f);
+
+                DrawProp("rippleMaxAmplitude", "Max Amplitude", out _);
+                DrawProp("rippleSpeed", "Speed", out _);
+                DrawProp("rippleFrequency", "Frequency", out _);
+                DrawProp("rippleDampingOverDistance", "Damping Over Distance", out _);
+                DrawProp("rippleDampingOverTime", "Damping Over Time", out _);
+                EditorGUI.EndDisabledGroup();
             });
 
             serializedObject.ApplyModifiedProperties();

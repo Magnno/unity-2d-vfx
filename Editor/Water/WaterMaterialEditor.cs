@@ -43,10 +43,8 @@ namespace Maguinho.VFX
                 {
                     EditorGUI.BeginChangeCheck();
                     Vector2 value = EditorGUILayout.Vector2Field(label, prop.vectorValue);
-                    if (EditorGUI.EndChangeCheck())
-                    {
-                        prop.vectorValue = value;
-                    }
+                    prop.vectorValue = value;
+                    EditorGUI.EndChangeCheck();
                 }
             }
 
@@ -66,6 +64,7 @@ namespace Maguinho.VFX
 
             EditorUtilities.DrawBox("Rendering", () =>
             {
+                DrawProp("_Enable_Lit", "Enable Lit", out _);
                 editor.RenderQueueField();
             });
 
@@ -76,8 +75,9 @@ namespace Maguinho.VFX
                 DrawProp("_Top_Color", "Top", out _);
                 DrawProp("_Bottom_Color", "Bottom", out _);
                 Space();
-                DrawProp("_Color_Fading", "Fading", out _);
-                DrawProp("_Color_Norm_Height", "Height", out _);
+                DrawProp("_Color_Height", "Height", out _);
+                DrawProp("_Color_Transition_Length", "Transition Length", out _);
+                DrawProp("_Color_Transition_Fading", "Transition Fading", out _);
             });
 
             Space(1f);
@@ -100,7 +100,17 @@ namespace Maguinho.VFX
                 EditorGUI.BeginDisabledGroup(prop.floatValue != 1f);
 
                 Space();
-                DrawProp("_Underwater_Opacity", "Opacity", out _);
+                DrawLabel("Opacity");
+                DrawProp("_Underwater_Enable_Opacity_Mask", "Enable Mask", out var maskProp);
+                if (maskProp.floatValue == 1f)
+                {
+                    DrawProp("_Underwater_Opacity", "Top Opacity", out _);
+                    DrawProp("_Underwater_Bottom_Opacity", "Bottom Opacity", out _);
+                    DrawProp("_Underwater_Mask_Length", "Mask Height", out _);
+                    DrawProp("_Underwater_Mask_Fading", "Mask Fading", out _);
+                }
+                else
+                    DrawProp("_Underwater_Opacity", "Opacity", out _);
 
                 Space();
                 //EditorGUILayout.LabelField("Refraction", EditorStyles.boldLabel);
@@ -141,23 +151,24 @@ namespace Maguinho.VFX
 
                 Space();
                 DrawProp("_Reflection_Opacity", "Opacity", out _);
-                DrawProp("_Reflection_Norm_Height", "Height", out _);
-                DrawProp("_Reflection_Fading", "Fading", out _);
                 DrawProp("_Reflection_Scale", "Scale", out _);
 
                 Space();
-                DrawLabel("Warp");
-                EditorGUILayout.LabelField("X Axis", EditorStyles.boldLabel);
-                DrawProp("_Reflection_X_Warp_Intensity", "Intensity", out _);
-                DrawProp("_Reflection_X_Warp_Frequency", "Frequency", out _);
-                DrawProp("_Reflection_X_Warp_Speed", "Speed", out _);
+                DrawLabel("Mask");
+                DrawProp("_Reflection_Mask_Height", "Height", out _);
+                DrawProp("_Reflection_Mask_Fading", "Fading", out _);
 
                 Space();
-                EditorGUILayout.LabelField("Y Axis", EditorStyles.boldLabel);
-                DrawProp("_Reflection_Y_Warp_Intensity", "Intensity", out _);
-                DrawProp("_Reflection_Y_Warp_Frequency", "Frequency", out _);
-                DrawProp("_Reflection_Y_Warp_X_Multiplier", "X Speed Multiplier", out _);
-                DrawVector2Prop("_Reflection_Y_Warp_Speed", "Speed");
+                DrawLabel("Simple Turbulence");
+                DrawProp("_Reflection_Turbulence_Intensity", "Intensity", out _);
+                DrawProp("_Reflection_Turbulence_Speed", "Speed", out _);
+                DrawProp("_Reflection_Turbulence_Scale", "Scale", out _);
+
+                Space();
+                DrawLabel("Directional Turbulence");
+                DrawProp("_Reflection_Warp_Intensity", "Intensity", out _);
+                DrawVector2Prop("_Reflection_Warp_Speed", "Speed");
+                DrawVector2Prop("_Reflection_Warp_Scale", "Scale");
 
                 EditorGUI.EndDisabledGroup();
             });
@@ -166,8 +177,16 @@ namespace Maguinho.VFX
 
             EditorUtilities.DrawFoldoutStyle1(ref FWaves, "Waves", FHColor, () =>
             {
+                if (Application.isPlaying)
+                {
+                    EditorGUILayout.HelpBox("Edit waves only when not in play mode.\nYou can still set 'Global Amplitude' and 'Global Speed' properties by code.", MessageType.Info);
+                    EditorGUI.BeginDisabledGroup(true);
+                }
+
                 DrawProp("_Enable_Waves", "Enable", out var prop);
-                EditorGUI.BeginDisabledGroup(prop.floatValue != 1f);
+
+                if (!Application.isPlaying)
+                    EditorGUI.BeginDisabledGroup(prop.floatValue != 1f);
 
                 Space();
                 DrawProp("_Global_Amplitude", "Global Amplitude", out _);
