@@ -1,11 +1,13 @@
 {
     "name": "com.maguinho.2dvfx",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "displayName": "2D Visual Effects",
     "description": "A collection of visual effects for 2D Unity projects.",
     "unity": "2022.3",
    "keywords": [
-      "VFX"
+      "VFX",
+      "shaders",
+      "water"
     ],
     "author": {
       "name": "Maguinho",
