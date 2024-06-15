@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Maguinho.VFX
 {
+    [ExecuteAlways]
     [RequireComponent(typeof(SpriteRenderer))]
     public sealed class SpriteVFX : MonoBehaviour
     {
@@ -239,16 +240,16 @@ namespace Maguinho.VFX
             Mat.SetFloat("_Sine_Movement_Sine_and_Cosine", _sineMovementSineAndCosine ? 1f : 0f);
         }
 
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            UpdateMaterial();
-        }
-#endif
-
         private void Start()
         {
             UpdateMaterial();
         }
+
+#if UNITY_EDITOR
+        private void Update()
+        {
+            UpdateMaterial();
+        }
+#endif
     }
 }
