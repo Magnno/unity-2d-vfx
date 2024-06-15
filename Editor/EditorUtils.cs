@@ -3,9 +3,9 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Maguinho
+namespace Maguinho.VFX
 {
-    public static class EditorUtils
+    static class EditorUtils
     {
         public delegate void InspectorContent();
 
@@ -95,7 +95,7 @@ namespace Maguinho
         }
     }
 
-    public struct BoxStyle
+    struct BoxStyle
     {
         public bool drawHeaderLine;
         public RectOffset margin;
@@ -115,7 +115,7 @@ namespace Maguinho
         }
     }
 
-    public struct FoldoutStyle
+    struct FoldoutStyle
     {
         public Color headerColor;
 

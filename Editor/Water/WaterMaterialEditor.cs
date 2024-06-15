@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Maguinho.VFX
 {
-    public sealed class WaterMaterialEditor : ShaderGUI
+    sealed class WaterMaterialEditor : ShaderGUI
     {
         private bool FColors = false;
         private bool FSurfaceLine = false;

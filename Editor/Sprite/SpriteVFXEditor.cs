@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Maguinho.VFX
 {
     [CustomEditor(typeof(SpriteVFX))]
-    public sealed class SpriteVFXEditor : Editor
+    sealed class SpriteVFXEditor : Editor
     {
         private SpriteVFX script;
 

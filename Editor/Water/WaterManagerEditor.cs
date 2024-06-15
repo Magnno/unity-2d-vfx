@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Maguinho.VFX
 {
     [CustomEditor(typeof(WaterManager))]
-    public sealed class WaterManagerEditor : Editor
+    sealed class WaterManagerEditor : Editor
     {
         private WaterManager script;
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Maguinho.VFX
 {
-    public sealed class SpriteVFXMaterialEditor : ShaderGUI
+    sealed class SpriteVFXMaterialEditor : ShaderGUI
     {
         public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
         {

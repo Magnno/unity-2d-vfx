@@ -1,17 +1,32 @@
 #if UNITY_EDITOR
 
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using System.IO;
 
 namespace Maguinho.VFX
 {
-    public sealed class CreateWaterGOEditor : MonoBehaviour
+    static class CreateGOEditor
     {
-        [MenuItem("GameObject/2D Object/Water", false, 10)]
-        static void Create()
+        const string PATH = "GameObject/2D Object/Maguinho/";
+
+        [MenuItem(PATH + "Sprite VFX")]
+        static void CreateSprite()
+        {
+            var go = new GameObject("Sprite VFX");
+
+            var sr = go.AddComponent<SpriteRenderer>();
+            sr.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Packages/com.unity.2d.sprite/Editor/ObjectMenuCreation/DefaultAssets/Textures/v2/Square.png");
+
+            go.AddComponent<SpriteVFX>();
+
+            Selection.activeGameObject = go;
+        }
+
+        [MenuItem(PATH + "Water")]
+        static void CreateWater()
         {
             // Create render texture
             RenderTexture renderTexture = new RenderTexture(960, 540, 0)
