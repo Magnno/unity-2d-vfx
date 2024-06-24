@@ -12,7 +12,7 @@ namespace Maguinho.VFX
         public Camera RenderCamera;
 
         // Mesh
-        [SerializeField, Min(2)] private int vertexCount = 20;
+        [SerializeField, Min(2)] private int vertexCount = 100;
         [SerializeField] private float meshWidth = 20f;
         [SerializeField] private float meshHeight = 10f;
         [SerializeField] private Pivot pivot = Pivot.TopCenter;
