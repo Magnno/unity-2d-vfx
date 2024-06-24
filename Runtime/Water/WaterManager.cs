@@ -49,7 +49,7 @@ namespace Maguinho.VFX
         /// </summary>
         public float GlobalAmplitude
         {
-            get { return _globalAmplitude; }
+            get => _globalAmplitude;
             set { _globalAmplitude = value; Material.SetFloat("_Global_Amplitude", _globalAmplitude); }
         }
         private float _globalAmplitude;
@@ -59,16 +59,20 @@ namespace Maguinho.VFX
         /// </summary>
         public float GlobalSpeed
         {
-            get { return _globalSpeed; }
+            get => _globalSpeed;
             set { _globalSpeed = value; Material.SetFloat("_Global_Speed", _globalSpeed); }
         }
         private float _globalSpeed;
 
 
         /// <summary>
-        /// Get the height of the waves at a specified horizontal position.
+        /// Gets the height of the waves at a specified horizontal position.
         /// </summary>
-        /// <param name="xPos">The horizontal position at which to get the height. (World Space)</param>
+        /// <param name="xPos">The horizontal position at which to get the height (in World Space).</param>
+        /// <returns>
+        /// The height of the waves at the specified position.<br/>
+        /// Returns <c>Mathf.NegativeInfinity</c> if the position is outside the surface bounds.
+        /// </returns>
         public float GetHeightAt(in float xPos)
         {
             Vector2 _pos = transform.position;
@@ -100,18 +104,32 @@ namespace Maguinho.VFX
             {
                 displacement += wave.amplitude * Mathf.Sin(xPos * wave.frequency - time * wave.speed * GlobalSpeed);
             }
+
             return transform.position.y + displacement * GlobalAmplitude;
         }
 
-        public void AddRipple(in float xPos, in float amplitude, in float duration)
+        /// <summary>
+        /// Adds a ripple effect to the water surface.
+        /// </summary>
+        /// <param name="xPos">The x-coordinate of the origin of the ripple.</param>
+        /// <param name="initialAmplitude">The initial amplitude (height) of the ripple. This value is clamped to the range defined by <c>rippleMaxAmplitude</c>.</param>
+        /// <param name="minDuration">
+        /// The minimum duration for the ripple to persist. The ripple will be deleted when its maximum amplitude falls below the threshold defined by <c>Ripple.MIN_AMPLITUDE</c>.
+        /// Setting a minimum duration ensures the ripple is not deleted immediately after it starts.
+        /// </param>
+        public void AddRipple(in float xPos, in float initialAmplitude, in float minDuration = 1f)
         {
-            ripples.Add(new(xPos, Mathf.Clamp(amplitude, -rippleMaxAmplitude, rippleMaxAmplitude), duration, rippleSpeed, rippleFrequency, rippleDampingOverDistance, rippleDampingOverTime));
+            ripples.Add(new(xPos,
+                            Mathf.Clamp(initialAmplitude, -rippleMaxAmplitude, rippleMaxAmplitude),
+                            rippleSpeed,
+                            rippleFrequency,
+                            rippleDampingOverDistance,
+                            rippleDampingOverTime,
+                            minDuration));
         }
 
         private void UpdateRipples()
         {
-            //float _t = Time.realtimeSinceStartup;
-
             if (!enableRipples)
                 return;
 
@@ -123,19 +141,26 @@ namespace Maguinho.VFX
 
             for (int i = ripples.Count - 1; i >= 0; i--)
             {
+                Ripple ripple = ripples[i];
+                float maxDisplacement = 0f;
+
                 for (int j = 0; j < vertexCount; j++)
                 {
-                    vertices[j].y += ripples[i].GetDisplacementAt(vertices[j].x + transform.position.x);
+                    float displacement = ripple.GetDisplacementAt(vertices[j].x + transform.position.x);
+
+                    float absDisplacement = Mathf.Abs(displacement);
+                    if (absDisplacement > maxDisplacement)
+                        maxDisplacement = absDisplacement;
+
+                    vertices[j].y += displacement;
                 }
 
-                if (ripples[i].IsOver())
+                if (ripple.CanDelete(maxDisplacement))
                     ripples.RemoveAt(i);
             }
 
             // Update the mesh
             waterMesh.vertices = vertices;
-
-            //Debug.Log("Elapsed time: " + (Time.realtimeSinceStartup - _t) * 1000f + " ms");
         }
 
         private void GenerateMesh()
@@ -297,9 +322,10 @@ namespace Maguinho.VFX
 
         private sealed class Ripple
         {
+            public const float MIN_DISPLACEMENT = .01f;
+
             private readonly float initialXPos;
             private readonly float initialAmplitude;
-            private readonly float duration;
 
             private readonly float timeSpeed;
             private readonly float frequency;
@@ -307,48 +333,41 @@ namespace Maguinho.VFX
             private readonly float dampingOverDistance;
             private readonly float dampingOverTime;
 
-            private readonly float initialTime;
+            private readonly float minDuration;
+
+            private readonly float initialTime = Time.time;
 
             private float ElapsedTime => (Time.time - initialTime) * timeSpeed;
 
-            public Ripple(float initialXPos, float initialAmplitude, float duration, float timeSpeed, float frequency, float dampingOverDistance, float dampingOverTime)
+            public Ripple(float initialXPos, float initialAmplitude, float timeSpeed, float frequency, float dampingOverDistance, float dampingOverTime, float minDuration)
             {
                 this.initialXPos = initialXPos;
                 this.initialAmplitude = initialAmplitude;
-                this.duration = Mathf.Max(duration, 0f);
                 this.timeSpeed = Mathf.Max(timeSpeed, 0f);
                 this.frequency = Mathf.Max(frequency, 0f);
                 this.dampingOverDistance = Mathf.Max(dampingOverDistance, 0f);
                 this.dampingOverTime = Mathf.Max(dampingOverTime, 0f);
-                initialTime = Time.time;
+                this.minDuration = minDuration;
             }
 
             public float GetDisplacementAt(in float xPos)
             {
                 float distanceFromCenter = Mathf.Abs(xPos - initialXPos);
 
-                float timeInPosition = ElapsedTime - distanceFromCenter;
-                if (timeInPosition <= 0f)
+                float time = ElapsedTime - distanceFromCenter;
+                if (time <= 0f)
                     return 0f;
 
-                // distance damping
-                // Mathf.Exp(-dampingOverDistance * distanceFromCenter)
-
-                // time damping
-                // Mathf.Exp(-dampingOverTime * timeInPosition)
-
-                // float amplitude = initialAmplitude * Mathf.Exp(-dampingOverDistance * distanceFromCenter) * Mathf.Exp(-dampingOverTime * timeInPosition);
-                
                 return
                     initialAmplitude *
                     Mathf.Exp(-dampingOverDistance * distanceFromCenter) *
-                    Mathf.Exp(-dampingOverTime * timeInPosition) *
-                    Mathf.Sin(timeInPosition * frequency);
+                    Mathf.Exp(-dampingOverTime * time) *
+                    Mathf.Sin(time * frequency);
             }
 
-            public bool IsOver()
+            public bool CanDelete(in float maxDisplacement)
             {
-                return ElapsedTime >= duration;
+                return ElapsedTime > minDuration && maxDisplacement < MIN_DISPLACEMENT;
             }
         }
     }

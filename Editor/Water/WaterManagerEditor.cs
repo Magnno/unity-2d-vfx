@@ -47,8 +47,11 @@ namespace Maguinho.VFX
                 DrawProp("pivot", "Pivot", out _);
             });
 
-            EditorUtils.DrawBox("Ripple", BoxStyle.Default, () =>
+            EditorUtils.DrawBox("Ripples", BoxStyle.Default, () =>
             {
+                EditorGUILayout.LabelField("Enable ripples calculations");
+                EditorGUILayout.Space(2f);
+
                 DrawProp("enableRipples", "Enable", out var prop);
                 EditorGUI.BeginDisabledGroup(!prop.boolValue);
                 EditorGUILayout.Space(2f);

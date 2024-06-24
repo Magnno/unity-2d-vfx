@@ -15,7 +15,7 @@ namespace Maguinho.VFX
             float height = waterManager.GetHeightAt(pos.x);
             if (Mathf.Sign(oldPos.y - height) != Mathf.Sign(pos.y - height))
             {
-                waterManager.AddRipple(pos.x, (pos.y - oldPos.y) * ampMultiplier, 10f);
+                waterManager.AddRipple(pos.x, (pos.y - oldPos.y) * ampMultiplier);
             }
             oldPos = pos;
         }
