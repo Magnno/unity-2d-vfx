@@ -8,7 +8,7 @@ The shaders are made with the Shader Graph tool, avaiable only in URP.
 Apply effects directly to sprites.  
 ![](https://github.com/Magnno/Unity_2D_VFX/assets/93272214/3aaf1282-c348-4b7a-8105-871867a4ff73)
 
-Create ripple effects on the screen.  
+(Not avaiable yet) Create ripple effects on the screen.  
 ![](https://github.com/Magnno/Unity_2D_VFX/assets/93272214/e80780fb-9e8c-4e30-a213-0a1612a47ff9)
 
 Stylized and dynamic water.  
