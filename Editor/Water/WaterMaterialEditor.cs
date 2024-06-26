@@ -35,14 +35,9 @@ namespace Maguinho.VFX
                 prop = FindProperty(reference, properties);
                 if (prop != null)
                 {
-                    EditorGUI.BeginChangeCheck();
-
                     bool toggleValue = prop.floatValue != 0;
                     toggleValue = EditorGUILayout.Toggle(new GUIContent { text = label }, toggleValue);
                     prop.floatValue = toggleValue ? 1.0f : 0.0f;
-
-                    if (EditorGUI.EndChangeCheck())
-                        editor.SaveChanges();
                 }
                 else
                     Debug.LogError("Couldn't find reference in material: " + reference);
@@ -194,14 +189,9 @@ namespace Maguinho.VFX
                 //boxStyle.margin.top = 10;
                 //EditorUtils.DrawBox("Generate Waves", boxStyle, () =>
                 //{
-                //    EditorGUI.BeginChangeCheck();
-
                 //    genWaveAmpScale = EditorGUILayout.FloatField("Amplitude Scale", genWaveAmpScale);
                 //    genWaveBaseFreq = EditorGUILayout.FloatField("Base Frequency", genWaveBaseFreq);
                 //    genWaveBaseSpeed = EditorGUILayout.FloatField("Base Speed", genWaveBaseSpeed);
-
-                //    if (EditorGUI.EndChangeCheck())
-                //        editor.SaveChanges();
 
                 //    if (GUILayout.Button("Generate Wave Pattern"))
                 //    {
