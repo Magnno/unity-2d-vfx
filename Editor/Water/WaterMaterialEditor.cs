@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,10 +14,13 @@ namespace Maguinho.VFX
         private bool FReflection = false;
         private bool FWaves = false;
 
+        //private float genWaveAmpScale;
+        //private float genWaveBaseFreq;
+        //private float genWaveBaseSpeed;
+
         public override void OnGUI(MaterialEditor editor, MaterialProperty[] properties)
         {
             #region Methods
-
             void DrawProp(string reference, string label, out MaterialProperty prop)
             {
                 prop = FindProperty(reference, properties);
@@ -24,6 +28,24 @@ namespace Maguinho.VFX
                     editor.ShaderProperty(prop, new GUIContent { text = label });
                 else
                     Debug.LogError("Coldn't find reference in material: " + reference);
+            }
+
+            void DrawToggle(string reference, string label, out MaterialProperty prop)
+            {
+                prop = FindProperty(reference, properties);
+                if (prop != null)
+                {
+                    EditorGUI.BeginChangeCheck();
+
+                    bool toggleValue = prop.floatValue != 0;
+                    toggleValue = EditorGUILayout.Toggle(new GUIContent { text = label }, toggleValue);
+                    prop.floatValue = toggleValue ? 1.0f : 0.0f;
+
+                    if (EditorGUI.EndChangeCheck())
+                        editor.SaveChanges();
+                }
+                else
+                    Debug.LogError("Couldn't find reference in material: " + reference);
             }
 
             void DrawVector2Prop(string reference, string label)
@@ -38,14 +60,6 @@ namespace Maguinho.VFX
                 }
             }
 
-            void DrawWave(int id)
-            {
-                EditorGUILayout.LabelField("Wave " + id, EditorStyles.boldLabel);
-                DrawProp("_Amplitude" + id, "Amplitude", out _);
-                DrawProp("_Frequency" + id, "Frequency", out _);
-                DrawProp("_Speed" + id, "Speed", out _);
-            }
-
             void Space(float space = 5f)
             {
                 EditorGUILayout.Space(space);
@@ -54,7 +68,7 @@ namespace Maguinho.VFX
 
             EditorUtils.DrawBox("Rendering", BoxStyle.Default, () =>
             {
-                DrawProp("_Enable_Lit", "Enable Lit", out _);
+                DrawToggle("_Enable_Lit", "Enable Lit", out _);
                 editor.RenderQueueField();
             });
 
@@ -70,7 +84,7 @@ namespace Maguinho.VFX
 
             EditorUtils.DrawFoldout(ref FSurfaceLine, "Surface Line", FoldoutStyle.Default, () =>
             {
-                DrawProp("_Enable_Surface_Line", "Enable", out var prop);
+                DrawToggle("_Enable_Surface_Line", "Enable", out var prop);
                 EditorGUI.BeginDisabledGroup(prop.floatValue != 1f);
                 Space();
                 DrawProp("_Surface_Line_Color", "Color", out _);
@@ -80,12 +94,12 @@ namespace Maguinho.VFX
 
             EditorUtils.DrawFoldout(ref FUnderwater, "Underwater", FoldoutStyle.Default, () =>
             {
-                DrawProp("_Enable_Underwater_Render", "Enable", out var prop);
+                DrawToggle("_Enable_Underwater_Render", "Enable", out var prop);
                 EditorGUI.BeginDisabledGroup(prop.floatValue != 1f);
 
                 Space();
                 EditorUtils.Title("Opacity");
-                DrawProp("_Underwater_Enable_Opacity_Mask", "Enable Mask", out var maskProp);
+                DrawToggle("_Underwater_Enable_Opacity_Mask", "Enable Mask", out var maskProp);
                 if (maskProp.floatValue == 1f)
                 {
                     DrawProp("_Underwater_Opacity", "Top Opacity", out _);
@@ -128,7 +142,7 @@ namespace Maguinho.VFX
 
             EditorUtils.DrawFoldout(ref FReflection, "Reflection", FoldoutStyle.Default, () =>
             {
-                DrawProp("_Enable_Reflection", "Enable", out var prop);
+                DrawToggle("_Enable_Reflection", "Enable", out var prop);
                 EditorGUI.BeginDisabledGroup(prop.floatValue != 1f);
 
                 Space();
@@ -163,7 +177,7 @@ namespace Maguinho.VFX
                     EditorGUI.BeginDisabledGroup(true);
                 }
 
-                DrawProp("_Enable_Waves", "Enable", out var prop);
+                DrawToggle("_Enable_Waves", "Enable", out var prop);
 
                 if (!Application.isPlaying)
                     EditorGUI.BeginDisabledGroup(prop.floatValue != 1f);
@@ -172,23 +186,51 @@ namespace Maguinho.VFX
                 DrawProp("_Global_Amplitude", "Global Amplitude", out _);
                 DrawProp("_Global_Speed", "Global Speed", out _);
 
-                Space();
-                DrawWave(1);
+                // too dumb to make it work
 
-                Space();
-                DrawWave(2);
+                //BoxStyle boxStyle = BoxStyle.Default;
+                //boxStyle.padding.left = 0;
+                //boxStyle.padding.right = 0;
+                //boxStyle.margin.top = 10;
+                //EditorUtils.DrawBox("Generate Waves", boxStyle, () =>
+                //{
+                //    EditorGUI.BeginChangeCheck();
 
-                Space();
-                DrawWave(3);
+                //    genWaveAmpScale = EditorGUILayout.FloatField("Amplitude Scale", genWaveAmpScale);
+                //    genWaveBaseFreq = EditorGUILayout.FloatField("Base Frequency", genWaveBaseFreq);
+                //    genWaveBaseSpeed = EditorGUILayout.FloatField("Base Speed", genWaveBaseSpeed);
 
-                Space();
-                DrawWave(4);
+                //    if (EditorGUI.EndChangeCheck())
+                //        editor.SaveChanges();
 
-                Space();
-                DrawWave(5);
+                //    if (GUILayout.Button("Generate Wave Pattern"))
+                //    {
+                //        System.Random random = new();
 
-                Space();
-                DrawWave(6);
+                //        for (int i = 1; i < 7; i++)
+                //        {
+                //            float amplitude = 1f / i;
+                //            float frequency = genWaveBaseFreq / amplitude;
+
+                //            float speed = frequency;
+                //            if (i == 6)
+                //                speed = -frequency;
+
+                //            FindProperty("_Amplitude" + i, properties).floatValue = amplitude;
+                //            FindProperty("_Frequency" + i, properties).floatValue = frequency;
+                //            FindProperty("_Speed" + i, properties).floatValue = speed;
+                //        }
+                //    }
+                //});
+
+                for (int i = 1; i < 7; i++)
+                {
+                    Space();
+                    EditorGUILayout.LabelField("Wave " + i, EditorStyles.boldLabel);
+                    DrawProp("_Amplitude" + i, "Amplitude", out _);
+                    DrawProp("_Frequency" + i, "Frequency", out _);
+                    DrawProp("_Speed" + i, "Speed", out _);
+                }
 
                 EditorGUI.EndDisabledGroup();
             });

@@ -103,15 +103,12 @@ namespace Maguinho.VFX
 
         public static BoxStyle Default
         {
-            get
+            get => new()
             {
-                return new BoxStyle
-                {
-                    drawHeaderLine = true,
-                    margin = new RectOffset(10, 10, 5, 5),
-                    padding = new RectOffset(20, 20, 5, 5)
-                };
-            }
+                drawHeaderLine = true,
+                margin = new RectOffset(10, 10, 5, 5),
+                padding = new RectOffset(20, 20, 5, 5)
+            };
         }
     }
 
@@ -121,13 +118,10 @@ namespace Maguinho.VFX
 
         public static FoldoutStyle Default
         {
-            get
+            get => new()
             {
-                return new FoldoutStyle
-                {
-                    headerColor = new Color(0f, 0f, 0f, .15f)
-                };
-            }
+                headerColor = new Color(0f, 0f, 0f, .15f)
+            };
         }
     }
 }
