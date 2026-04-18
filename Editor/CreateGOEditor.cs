@@ -12,19 +12,6 @@ namespace Maguinho.VFX
     {
         const string PATH = "GameObject/2D Object/Maguinho/";
 
-        [MenuItem(PATH + "Sprite VFX")]
-        static void CreateSprite()
-        {
-            var go = new GameObject("Sprite VFX");
-
-            var sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Packages/com.unity.2d.sprite/Editor/ObjectMenuCreation/DefaultAssets/Textures/v2/Square.png");
-
-            go.AddComponent<SpriteVFX>();
-
-            Selection.activeGameObject = go;
-        }
-
         [MenuItem(PATH + "Water")]
         static void CreateWater()
         {
