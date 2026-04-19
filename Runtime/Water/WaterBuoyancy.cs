@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Maguinho.VFX
+namespace Magnno.Water2D
 {
     public sealed class WaterBuoyancy : MonoBehaviour
     {

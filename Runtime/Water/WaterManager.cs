@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Maguinho.VFX
+namespace Magnno.Water2D
 {
     [ExecuteAlways]
     public sealed class WaterManager : MonoBehaviour

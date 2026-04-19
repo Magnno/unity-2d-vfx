@@ -1,9 +1,7 @@
 {
-    "name": "maguinho.2dvfx.Editor",
+    "name": "magnzs.water-2d",
     "rootNamespace": "",
-    "references": [
-        "GUID:27eb561d948650940854b8f49778beaa"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

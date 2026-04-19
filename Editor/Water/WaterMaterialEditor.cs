@@ -4,7 +4,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace Maguinho.VFX
+namespace Magnno.Water2D.Editor
 {
     sealed class WaterMaterialEditor : ShaderGUI
     {

@@ -3,10 +3,10 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Maguinho.VFX
+namespace Magnno.Water2D.Editor
 {
     [CustomEditor(typeof(WaterManager))]
-    sealed class WaterManagerEditor : Editor
+    sealed class WaterManagerEditor : UnityEditor.Editor
     {
         private WaterManager script;
 

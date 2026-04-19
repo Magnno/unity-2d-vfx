@@ -1,17 +1,18 @@
 {
-    "name": "com.maguinho.2dvfx",
-    "version": "0.2.0",
-    "displayName": "2D Visual Effects",
-    "description": "A collection of visual effects for 2D Unity projects.",
-    "unity": "2022.3",
-   "keywords": [
-      "VFX",
-      "shaders",
-      "water"
-    ],
-    "author": {
-      "name": "Maguinho",
-      "email": "magnnocontato@gmail.com",
-      "url": "https://github.com/Magnno"
-    }
+  "name": "com.magnzs.water-2d",
+  "version": "0.2.0",
+  "displayName": "2D Water",
+  "description": "A 2D water system for Unity.",
+  "unity": "2022.3",
+  "keywords": [
+    "water",
+    "2d",
+    "shader",
+    "vfx"
+  ],
+  "author": {
+    "name": "Magnno",
+    "email": "93272214+magnzs@users.noreply.github.com",
+    "url": "https://github.com/magnzs/unity-water-2d"
   }
+}

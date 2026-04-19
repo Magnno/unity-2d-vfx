@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
-namespace Maguinho.VFX
+namespace Magnno.Water2D.Editor
 {
     static class CreateGOEditor
     {
