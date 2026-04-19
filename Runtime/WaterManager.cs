@@ -6,6 +6,8 @@ namespace Magnno.Water2D
     [ExecuteAlways]
     public sealed class WaterManager : MonoBehaviour
     {
+        public const string SHADER_PATH = "Magnno/Water2D";
+
         // Components
         public MeshFilter MeshFilter;
         public MeshRenderer MeshRenderer;
@@ -261,7 +263,7 @@ namespace Magnno.Water2D
 
         private bool IsMissingComponents()
         {
-            bool hasAllComponents = MeshFilter && MeshRenderer && RenderCamera && Material && Material.shader.name == "Maguinho/2DWater";
+            bool hasAllComponents = MeshFilter && MeshRenderer && RenderCamera && Material && Material.shader.name == SHADER_PATH;
             if (!hasAllComponents)
             {
 #if UNITY_EDITOR

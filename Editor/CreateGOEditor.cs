@@ -10,9 +10,9 @@ namespace Magnno.Water2D.Editor
 {
     static class CreateGOEditor
     {
-        const string PATH = "GameObject/2D Object/Maguinho/";
+        const string CREATE_PATH = "GameObject/2D Object/Magnno/Water";
 
-        [MenuItem(PATH + "Water")]
+        [MenuItem(CREATE_PATH)]
         static void CreateWater()
         {
             // Create render texture
@@ -25,7 +25,7 @@ namespace Magnno.Water2D.Editor
             };
 
             // Create water material
-            Material material = new Material(Shader.Find("Maguinho/2DWater"));
+            Material material = new Material(Shader.Find(WaterManager.SHADER_PATH));
             material.name = "WaterMaterial";
 
             // Create water game object
