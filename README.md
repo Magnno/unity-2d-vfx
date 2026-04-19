@@ -1,46 +1,55 @@
-# Visual Effects for 2D Unity Projects
-This package has a variety of shaders that are not included by default in Unity.
+# 🌊 2D Water System for Unity (URP)
 
-The shaders are made with the Shader Graph tool, avaiable only in URP.  
-<i>~ Built-in RP not supported.</i>
+A performant 2D water system for Unity using Shader Graph. Features stylized rendering and buoyancy physics.
 
-## Examples
-Apply effects directly to sprites.  
-![](https://github.com/Magnno/Unity_2D_VFX/assets/93272214/3aaf1282-c348-4b7a-8105-871867a4ff73)
+> [!NOTE]
+> This package is built exclusively for the **Universal Render Pipeline (URP)**.
 
-(Not avaiable yet) Create ripple effects on the screen.  
-![](https://github.com/Magnno/Unity_2D_VFX/assets/93272214/e80780fb-9e8c-4e30-a213-0a1612a47ff9)
-
-Stylized and dynamic water.  
 ![](https://github.com/Magnno/Unity_2D_VFX/assets/93272214/618681cc-f7d3-4753-97c2-588aded45b28)
 
-## Installation
-Install via Unity's [Package Manager](https://docs.unity3d.com/Manual/upm-ui-giturl.html)
+## ✨ Features
+* **🌐 Dynamic Mesh Generation:** Automatically generates water meshes with adjustable vertex density.
+* **🎨 Stylized Shader:** Real-time refraction and reflection effects using Shader Graph.
+* **⛵ Buoyancy Physics:** Easy-to-use component for floating object simulations.
+* **🛠️ Integrated Workflow:** Custom menu items for quick setup.
 
-1. Open the **add** ![](https://docs.unity3d.com/uploads/Main/iconAdd.png) menu in the Package Manager’s toolbar.  
-2. Select **Add package from git URL** from the add menu.  
-![](https://docs.unity3d.com/uploads/Main/upm-ui-giturl.png)
-3. Enter the following URL:  
-```
-https://github.com/Magnno/Unity_2D_VFX.git
-```
+## 📦 Installation
 
-## How to use
-### Water
-Create a water GameObject by going to `GameObject / 2D Object / Water`.  
-<img src="https://github.com/Magnno/Unity_2D_VFX/assets/93272214/384ad025-6645-4c3f-87f8-d422787b9caa" width="400">
+Install via Unity Package Manager (UPM):
 
-This process will generate a parent GameObject named "Water" along with a child GameObject named "Render Camera." It will also generate a **material** and a **render texture**, both of which will be stored in the scene's subfolder.  
+1. In Unity, open **Window > Package Manager**.
+2. Click the **Add (+)** button and select **Add package from git URL**.
+3. Enter the following URL:
+   ```text
+   https://github.com/magnzs/unity-water-2d.git
+   ```
 
-The "Water" GameObject has components to generate the mesh of the water. It's possible to set the width, height and vertex count. There is also a component to change the sorting order.  
-![](https://github.com/Magnno/Unity_2D_VFX/assets/93272214/f8e60c2f-5b8c-427a-9513-075357c76dbf)  
-![](https://github.com/Magnno/Unity_2D_VFX/assets/93272214/f3fa0abd-6719-46e3-af0d-de92363bfce7)  
+## ⚡ Quick Start
+### 1. Setup
+Go to **GameObject > 2D Object > Magnno > Water**.
 
+This will automatically instantiate the Water system, including a Render Camera and necessary assets (Material and Render Texture) within the scene's subfolder.
 
-The "Render Camera" GameObject has a camera that will render onto the generated render texture. This is for creating visual effects in the water shader, such as refraction and reflection.
+### 2. Mesh Configuration
+The Water GameObject includes components to manage the mesh:
 
-*<b>Note</b>: The rendering camera should omit rendering the water and any object passing in front of it. Use the camera's culling mask to filter layers. By default, the "Water" GameObject is assigned to the "Water" layer, which will be omitted.*  
-![](https://github.com/Magnno/Unity_2D_VFX/assets/93272214/967ada49-2cae-4160-930f-bf355423677b)
+* Width/Height: Adjust the dimensions of the water body.
+* Vertex Count: Controls the resolution of the water surface waves.
+* Sorting Order: Standard Unity sorting layer management.
 
+### 3. Visual Styling
+Select the generated Material in your scene's subfolder and tweak the parameters to customize the water's appearance (color, wave speed, distortion, etc.).
 
-To change the appearence of the water, go to the generated material and adjust the parameters.
+### 4. Buoyancy Physics
+To make objects float:
+
+1. Add a **Water Buoyancy** component to any GameObject that has a **Rigidbody 2D**.
+2. Create two child empty objects to act as "buoyancy points" (e.g., left and right side of a boat).
+3. Assign these objects to the corresponding fields in the **Water Buoyancy** component.
+4. Adjust the buoyancy parameters to match your desired physics behavior.
+
+## 🔍 Technical Details
+The system uses a dedicated Render Camera child object to capture the background, allowing the shader to calculate real-time distortions and transparency.
+
+> [!IMPORTANT]
+> Ensure the Render Camera's Culling Mask excludes the "Water" layer and any foreground objects to avoid rendering artifacts.
