@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This project is **no longer actively maintained**.
+
 # 🌊 2D Water System for Unity (URP)
 
 A performant 2D water system for Unity using Shader Graph. Features stylized rendering and buoyancy physics.
